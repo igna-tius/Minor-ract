@@ -11,7 +11,7 @@ class WelcomeComponent extends Component{
 		<div>
 		<h1>Welcome!</h1>
 		<div className="container">
-		 Welcome {this.props.match.params.name} .
+		 Welcome {this.props.user} .
 		<br/>
 		You can see your Posted queries <Link to="/queries">here</Link>.
 		</div>

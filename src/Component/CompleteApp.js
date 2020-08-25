@@ -8,19 +8,32 @@ import LogoutComponent from "./LogoutComponent";
 import FooterComponent from "./FooterComponent";
 import WelcomeComponent from "./WelcomeComponent";
 import QueriesComponent from "./QueriesComponent";
-import EditQuery from "./EditQuery"
-
+import EditQuery from "./EditQuery";
+import AuthenticationService from "./AuthenticationService"
 
 class CompleteApp extends Component{
 	constructor(props){
 		super(props);
-		this.state={login:false};
+		this.state={
+			login:false,
+			user:""
+		};
 		this.hasLoggedIn=this.hasLoggedIn.bind(this);
+		this.logout=this.logout.bind(this);
 	}
 
-	hasLoggedIn(){
+	hasLoggedIn(name){
 		this.setState({
-			login:!this.state.login
+			login:!this.state.login,
+			user:name
+		})
+	}
+	 
+	logout(){
+		AuthenticationService.logout()
+		this.setState({
+			login:false,
+			user:""
 		})
 	}
 
@@ -28,16 +41,16 @@ class CompleteApp extends Component{
 		return(
 			<div>
 			<Router>
-				<HeaderComponent log={this.state.login} fun={this.hasLoggedIn}/>
+				<HeaderComponent log={this.state.login} logout={this.logout} user={this.state.user}/>
 				<div className="sarvekshan">
 				<Switch>
-					<LoginRoute  exact path="/" component={LoginComponent}/>
-					<LoginRoute path="/login" component={LoginComponent}/>
-					<AuthenticatedRoute path="/welcome/:name"component={WelcomeComponent}/>
-					<AuthenticatedRoute path="/queries/:id" component={EditQuery}/>
-					<AuthenticatedRoute  path="/queries"component={QueriesComponent}/>
-					<AuthenticatedRoute path="/feeds" component={QueriesComponent}/>
-					<AuthenticatedRoute path="/logout" component={LogoutComponent}/>
+					<LoginRoute  exact path="/" render={(routeProps)=><LoginComponent {...routeProps} fun={this.hasLoggedIn}/> }/>
+					<LoginRoute path="/login" render={(routeProps)=><LoginComponent {...routeProps} fun={this.hasLoggedIn}/>}/>
+					<AuthenticatedRoute path="/welcome/"  render={(routeProps)=><WelcomeComponent {...routeProps} user={this.state.user}/>}/>
+					<AuthenticatedRoute path="/queries/:id" render={(routeProps)=><EditQuery {...routeProps}/>}/>
+					<AuthenticatedRoute  path="/queries" render={(routeProps)=><QueriesComponent {...routeProps}/>}/>
+					<AuthenticatedRoute path="/feeds"   render={(routeProps)=><QueriesComponent {...routeProps}/>}/>
+					<AuthenticatedRoute path="/logout" render={(routeProps)=><LogoutComponent {...routeProps} log={this.state.login} fun={this.hasLoggedIn}/>}/>
 					<Route component={ErrorComponent}/>
 				</Switch>		
 				</div>

@@ -31,6 +31,7 @@ class LoginComponent extends Component{
 			this.setState({
 				invalidCredentials:false
 			})
+			this.props.fun(this.state.username)
 		})
 		.catch(this.setState({invalidCredentials:true}))
 
