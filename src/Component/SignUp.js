@@ -11,8 +11,6 @@ import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import styles from "../styles/LoginComponetStyles";
 
-import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
 import { Link } from "react-router-dom";
 import AuthenticationService from "./AuthenticationService";
 import HeaderComponent from "./HeaderComponent";
@@ -25,6 +23,7 @@ class SignUp extends Component {
       lastname: "",
       username: "",
       password: "",
+      email: "",
     };
     this.hanldeChange = this.hanldeChange.bind(this);
     this.registerClicked = this.registerClicked.bind(this);
@@ -50,7 +49,7 @@ class SignUp extends Component {
   }
   render() {
     const check = AuthenticationService.isUserLoggedIn();
-    if (check == true) {
+    if (check === true) {
       this.props.history.push("/");
     }
     const { classes } = this.props;
@@ -64,25 +63,41 @@ class SignUp extends Component {
             </Avatar>
             <Typography variant="h5">Sign Up</Typography>
             <form className={classes.form}>
-              <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="firstname">Firstname</InputLabel>
-                <Input
-                  id="firstname"
-                  name="firstname"
-                  autoFocus
-                  value={this.state.firstname}
-                  onChange={this.hanldeChange}
-                />
-              </FormControl>
-              <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="password">Lastname</InputLabel>
-                <Input
-                  id="lastname"
-                  name="lastname"
-                  value={this.state.lastname}
-                  onChange={this.hanldeChange}
-                />
-              </FormControl>
+              <div
+                style={{
+                  display: "flex",
+                  width: "100%",
+                  padding: "0px",
+                  justifyContent: "space-between",
+                }}
+              >
+                <FormControl margin="normal" required style={{ width: "47%" }}>
+                  <InputLabel htmlFor="firstname">Firstname</InputLabel>
+                  <Input
+                    id="firstname"
+                    name="firstname"
+                    autoFocus
+                    value={this.state.firstname}
+                    onChange={this.hanldeChange}
+                  />
+                </FormControl>
+                <FormControl
+                  margin="normal"
+                  required
+                  style={{
+                    width: "47%",
+                    flexDirection: "right",
+                  }}
+                >
+                  <InputLabel htmlFor="password">Lastname</InputLabel>
+                  <Input
+                    id="lastname"
+                    name="lastname"
+                    value={this.state.lastname}
+                    onChange={this.hanldeChange}
+                  />
+                </FormControl>
+              </div>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="username">Username</InputLabel>
                 <Input
@@ -102,6 +117,16 @@ class SignUp extends Component {
                   onChange={this.hanldeChange}
                 />
               </FormControl>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="email">Email</InputLabel>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={this.state.email}
+                  onChange={this.hanldeChange}
+                />
+              </FormControl>
               <Button
                 variant="contained"
                 type="submit"
@@ -110,9 +135,12 @@ class SignUp extends Component {
                 className={classes.submit}
                 onClick={this.registerClicked}
               >
-                Sign In
+                Sign up
               </Button>
-              <p className="forgot-password text-right">
+              <p
+                className="forgot-password text-right"
+                style={{ marginBottom: "-10px" }}
+              >
                 Already registered <Link to="/">sign in?</Link>
               </p>
             </form>

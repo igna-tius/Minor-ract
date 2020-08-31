@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import QueryDataService from "../api/QueryDataService.js";
 import AuthenticationService from "./AuthenticationService.js";
 import moment from "moment";
-import PostAddIcon from "@material-ui/icons/PostAdd";
 import { Link } from "react-router-dom";
 import HeaderComponent from "./HeaderComponent";
+
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+
 class QueriesComponent extends Component {
   constructor(props) {
     super(props);
@@ -80,7 +83,9 @@ class QueriesComponent extends Component {
         </div>
         <div style={{ marginLeft: "75%" }}>
           <Link to="/addquery">
-            <PostAddIcon />
+            <Fab style={{ backgroundColor: "#167bff" }} aria-label="add">
+              <AddIcon />
+            </Fab>
           </Link>
         </div>
         <br />

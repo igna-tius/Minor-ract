@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AuthenticatedRoute from "./AuthenticatedRoute";
 import LoginRoute from "./LoginRoute";
 import LoginComponent from "./LoginComponent";
-import HeaderComponent from "./HeaderComponent";
 import LogoutComponent from "./LogoutComponent";
 import FooterComponent from "./FooterComponent";
 import WelcomeComponent from "./WelcomeComponent";
@@ -43,7 +42,7 @@ class CompleteApp extends Component {
   }
 
   render() {
-    console.log(this.state.user);
+    const { user } = this.state;
     const { classes } = this.props;
     return (
       <div>
@@ -94,7 +93,7 @@ class CompleteApp extends Component {
               <AuthenticatedRoute
                 path="/addquery"
                 render={(routeProps) => (
-                  <AddQuery {...routeProps} logot={this.logout} />
+                  <AddQuery {...routeProps} logot={this.logout} user={user} />
                 )}
               />
               <AuthenticatedRoute
@@ -128,7 +127,6 @@ class CompleteApp extends Component {
               <Route component={ErrorComponent} />
             </Switch>
           </div>
-          <FooterComponent />
         </Router>
       </div>
     );

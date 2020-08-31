@@ -5,7 +5,7 @@ import AuthenticationService from "./AuthenticationService";
 class LogoutComponent extends Component {
   render() {
     const check = AuthenticationService.isUserLoggedIn();
-    if (check == true) {
+    if (check === true) {
       this.props.history.push("/");
     }
     return (

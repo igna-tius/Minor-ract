@@ -6,6 +6,12 @@ import moment from "moment";
 import HeaderComponent from "./HeaderComponent.js";
 import AuthenticationService from "./AuthenticationService.js";
 
+import { Link } from "react-router-dom";
+
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+import RefreshIcon from "@material-ui/icons/Refresh";
+
 class FeedComponent extends Component {
   constructor(props) {
     super(props);
@@ -74,8 +80,16 @@ class FeedComponent extends Component {
               login={!check}
               logot={this.props.logot}
             />
-            <button onClick={this.refreshQuery}>Refresh</button>
-            <table className="table">
+            <div>
+              <h2>Queries</h2>
+
+              <div style={{ marginLeft: "75%" }}>
+                <Fab style={{ backgroundColor: "#167bff" }} aria-label="add">
+                  <RefreshIcon onClick={this.refreshQuery} />
+                </Fab>
+              </div>
+            </div>
+            <table className="table" style={{ marginTop: "30px" }}>
               <thead>
                 <tr>
                   <th>Date</th>

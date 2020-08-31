@@ -43,7 +43,7 @@ class LoginComponent extends Component {
     });
   }
   handleClose() {
-    this.setState({ invalidCredentials: false });
+    this.setState({ invalidCredentials: false, loginsuccess: false });
   }
 
   loginClicked(e) {
@@ -55,22 +55,43 @@ class LoginComponent extends Component {
           this.state.username,
           this.state.password
         );
-        this.props.history.push(`welcome/${response.data.firstname}`);
+
         this.setState({
           loginsuccess: true,
         });
+
         this.props.fun(this.state.username);
+        this.props.history.push(`welcome/${response.data.firstname}`);
       })
-      .catch(this.setState({ invalidCredentials: true }));
+      .catch(
+        setTimeout(() => {
+          this.setState({ invalidCredentials: true });
+        }, 1000)
+      );
   }
 
   render() {
     const { classes } = this.props;
-    const { invalidCredentials, vertical, horizontal } = this.state;
+    const {
+      invalidCredentials,
+      vertical,
+      horizontal,
+      loginsuccess,
+    } = this.state;
     return (
       <div>
         <HeaderComponent register={true} logout={false} login={false} />
         <main className={classes.main}>
+          <Snackbar
+            anchorOrigin={{ vertical, horizontal }}
+            open={loginsuccess}
+            autoHideDuration={4000}
+            onClose={this.handleClose}
+          >
+            <Alert onClose={this.handleClose} severity="success">
+              Login Succesfull!
+            </Alert>
+          </Snackbar>
           <Snackbar
             anchorOrigin={{ vertical, horizontal }}
             open={invalidCredentials}
@@ -100,6 +121,7 @@ class LoginComponent extends Component {
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <Input
+                  type="password"
                   id="password"
                   name="password"
                   value={this.state.password}
