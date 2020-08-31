@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import AuthenticationService from "./AuthenticationService";
-import LoginDataService from "../api/LoginDataService.js";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -15,84 +13,81 @@ import styles from "../styles/LoginComponetStyles";
 
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import { Link } from "react-router-dom";
+import AuthenticationService from "./AuthenticationService";
 import HeaderComponent from "./HeaderComponent";
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
-
-class LoginComponent extends Component {
+class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      firstname: "",
+      lastname: "",
       username: "",
       password: "",
-      invalidCredentials: false,
-      loginsuccess: false,
-      vertical: "top",
-      horizontal: "center",
     };
     this.hanldeChange = this.hanldeChange.bind(this);
-    this.loginClicked = this.loginClicked.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.registerClicked = this.registerClicked.bind(this);
   }
 
-  hanldeChange(event) {
+  registerClicked(e) {
+    e.preventDefault();
+    const msg =
+      this.state.firstname +
+      " " +
+      this.state.lastname +
+      " " +
+      this.state.username +
+      " " +
+      this.state.password;
+    alert(msg);
+  }
+
+  hanldeChange(e) {
     this.setState({
-      [event.target.name]: event.target.value,
+      [e.target.name]: e.target.value,
     });
   }
-  handleClose() {
-    this.setState({ invalidCredentials: false });
-  }
-
-  loginClicked(e) {
-    e.preventDefault();
-    LoginDataService.checkLogin(this.state.username, this.state.password)
-      .then((response) => {
-        console.log(response);
-        AuthenticationService.registerSuccessfulLogin(
-          this.state.username,
-          this.state.password
-        );
-        this.props.history.push(`welcome/${response.data.firstname}`);
-        this.setState({
-          loginsuccess: true,
-        });
-        this.props.fun(this.state.username);
-      })
-      .catch(this.setState({ invalidCredentials: true }));
-  }
-
   render() {
+    const check = AuthenticationService.isUserLoggedIn();
+    if (check == true) {
+      this.props.history.push("/");
+    }
     const { classes } = this.props;
-    const { invalidCredentials, vertical, horizontal } = this.state;
     return (
       <div>
-        <HeaderComponent register={true} logout={false} login={false} />
+        <HeaderComponent login={true} register={false} logout={false} />
         <main className={classes.main}>
-          <Snackbar
-            anchorOrigin={{ vertical, horizontal }}
-            open={invalidCredentials}
-            autoHideDuration={4000}
-            onClose={this.handleClose}
-          >
-            <Alert onClose={this.handleClose} severity="error">
-              Invalid Credentials!
-            </Alert>
-          </Snackbar>
-          <Paper className={classes.paper}>
+          <Paper className={classes.paper} style={{ marginTop: "30px" }}>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography variant="h5">Sign In</Typography>
+            <Typography variant="h5">Sign Up</Typography>
             <form className={classes.form}>
               <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="email">Username</InputLabel>
+                <InputLabel htmlFor="firstname">Firstname</InputLabel>
+                <Input
+                  id="firstname"
+                  name="firstname"
+                  autoFocus
+                  value={this.state.firstname}
+                  onChange={this.hanldeChange}
+                />
+              </FormControl>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="password">Lastname</InputLabel>
+                <Input
+                  id="lastname"
+                  name="lastname"
+                  value={this.state.lastname}
+                  onChange={this.hanldeChange}
+                />
+              </FormControl>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="username">Username</InputLabel>
                 <Input
                   id="username"
                   name="username"
-                  autoFocus
                   value={this.state.username}
                   onChange={this.hanldeChange}
                 />
@@ -102,6 +97,7 @@ class LoginComponent extends Component {
                 <Input
                   id="password"
                   name="password"
+                  type="password"
                   value={this.state.password}
                   onChange={this.hanldeChange}
                 />
@@ -112,10 +108,13 @@ class LoginComponent extends Component {
                 fullWidth
                 color="primary"
                 className={classes.submit}
-                onClick={this.loginClicked}
+                onClick={this.registerClicked}
               >
                 Sign In
               </Button>
+              <p className="forgot-password text-right">
+                Already registered <Link to="/">sign in?</Link>
+              </p>
             </form>
           </Paper>
         </main>
@@ -123,4 +122,4 @@ class LoginComponent extends Component {
     );
   }
 }
-export default withStyles(styles)(LoginComponent);
+export default withStyles(styles)(SignUp);

@@ -12,6 +12,9 @@ import EditQuery from "./EditQuery";
 import AddQuery from "./AddQuery";
 import AuthenticationService from "./AuthenticationService";
 import FeedComponent from "./FeedComponent";
+import SignUp from "./SignUp";
+import { withStyles } from "@material-ui/styles";
+import styles from "../styles/CompleteAppStyles";
 
 class CompleteApp extends Component {
   constructor(props) {
@@ -41,52 +44,78 @@ class CompleteApp extends Component {
 
   render() {
     console.log(this.state.user);
+    const { classes } = this.props;
     return (
       <div>
         <Router>
-          <HeaderComponent
-            log={this.state.login}
-            logout={this.logout}
-            user={this.state.user}
-          />
-          <div className="sarvekshan">
+          <div className={classes.root}>
             <Switch>
               <LoginRoute
                 exact
                 path="/"
                 render={(routeProps) => (
-                  <LoginComponent {...routeProps} fun={this.hasLoggedIn} />
+                  <LoginComponent
+                    {...routeProps}
+                    fun={this.hasLoggedIn}
+                    logot={this.logout}
+                  />
                 )}
               />
               <LoginRoute
                 path="/login"
                 render={(routeProps) => (
-                  <LoginComponent {...routeProps} fun={this.hasLoggedIn} />
+                  <LoginComponent
+                    {...routeProps}
+                    fun={this.hasLoggedIn}
+                    logot={this.logout}
+                  />
+                )}
+              />
+              <LoginRoute
+                path="/register"
+                render={(routeProps) => (
+                  <SignUp
+                    {...routeProps}
+                    fun={this.hasLoggedIn}
+                    logot={this.logout}
+                  />
                 )}
               />
               <AuthenticatedRoute
                 path="/welcome/"
                 render={(routeProps) => (
-                  <WelcomeComponent {...routeProps} user={this.state.user} />
+                  <WelcomeComponent
+                    {...routeProps}
+                    user={this.state.user}
+                    logot={this.logout}
+                  />
                 )}
               />
               <AuthenticatedRoute
                 path="/addquery"
-                render={(routeProps) => <AddQuery {...routeProps} />}
+                render={(routeProps) => (
+                  <AddQuery {...routeProps} logot={this.logout} />
+                )}
               />
               <AuthenticatedRoute
                 path="/queries/:id"
-                render={(routeProps) => <EditQuery {...routeProps} />}
+                render={(routeProps) => (
+                  <EditQuery {...routeProps} logot={this.logout} />
+                )}
               />
               <AuthenticatedRoute
                 path="/queries"
-                render={(routeProps) => <QueriesComponent {...routeProps} />}
+                render={(routeProps) => (
+                  <QueriesComponent {...routeProps} logot={this.logout} />
+                )}
               />
-              <AuthenticatedRoute
+              <Route
                 path="/feeds"
-                render={(routeProps) => <FeedComponent {...routeProps} />}
+                render={(routeProps) => (
+                  <FeedComponent {...routeProps} logot={this.logout} />
+                )}
               />
-              <AuthenticatedRoute
+              <Route
                 path="/logout"
                 render={(routeProps) => (
                   <LogoutComponent
@@ -110,4 +139,4 @@ function ErrorComponent() {
   return <div>I don't know what happend.Contact Help center.</div>;
 }
 
-export default CompleteApp;
+export default withStyles(styles)(CompleteApp);
