@@ -1,17 +1,18 @@
 import React,{Component} from "react";
 import {Link} from "react-router-dom"
+import AuthenticationService from "./AuthenticationService"; 
 class WelcomeComponent extends Component{
 	
 	
 
 	
 	render(){
-
+		const user=AuthenticationService.getLoggedInUsername()
 		return(
 		<div>
 		<h1>Welcome!</h1>
 		<div className="container">
-		 Welcome {this.props.user} .
+		 Welcome {user} .
 		<br/>
 		You can see your Posted queries <Link to="/queries">here</Link>.
 		</div>

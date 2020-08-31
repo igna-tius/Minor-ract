@@ -2,6 +2,13 @@ import React,{Component} from "react";
 import QueryDataService from "../api/QueryDataService.js";
 import AuthenticationService from "./AuthenticationService.js"
 import moment from "moment";
+import PostAddIcon from '@material-ui/icons/PostAdd';
+import {Link} from "react-router-dom";
+
+
+
+
+
 class QueriesComponent extends Component{
 	constructor(props){
 		super(props);
@@ -52,7 +59,13 @@ class QueriesComponent extends Component{
 		return(
 		<div>
 		<br/>
-			<h2>Queries</h2>
+			<div >
+				<h2 >Queries</h2>
+				
+	  		</div>
+			<div style={{marginLeft:"75%"} }>
+			  <Link to="/addquery"><PostAddIcon/></Link>
+			</div>
 			<br/>
 			{this.state.message && <div className="alert alert-success">{this.state.message}</div>}
 			<br/>
