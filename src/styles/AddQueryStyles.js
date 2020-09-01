@@ -31,7 +31,7 @@ const styles = (theme) => ({
   },
   submit: {
     marginTop: theme.spacing.unit * 3,
-    backgroundColor: "#1C8EF9",
+    backgroundColor: "#5eaaa8",
   },
 });
 export default styles;

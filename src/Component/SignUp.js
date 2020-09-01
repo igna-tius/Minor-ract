@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Usericon from "@material-ui/icons/SupervisedUserCircle";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -14,6 +14,7 @@ import styles from "../styles/LoginComponetStyles";
 import { Link } from "react-router-dom";
 import AuthenticationService from "./AuthenticationService";
 import HeaderComponent from "./HeaderComponent";
+import FooterComponent from "./FooterComponent";
 
 class SignUp extends Component {
   constructor(props) {
@@ -59,7 +60,7 @@ class SignUp extends Component {
         <main className={classes.main}>
           <Paper className={classes.paper} style={{ marginTop: "30px" }}>
             <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
+              <Usericon />
             </Avatar>
             <Typography variant="h5">Sign Up</Typography>
             <form className={classes.form}>
@@ -131,7 +132,7 @@ class SignUp extends Component {
                 variant="contained"
                 type="submit"
                 fullWidth
-                color="primary"
+                color="secondary"
                 className={classes.submit}
                 onClick={this.registerClicked}
               >
@@ -141,11 +142,15 @@ class SignUp extends Component {
                 className="forgot-password text-right"
                 style={{ marginBottom: "-10px" }}
               >
-                Already registered <Link to="/">sign in?</Link>
+                Already registered{" "}
+                <Link to="/" style={{ textDecoration: "none" }}>
+                  sign in?
+                </Link>
               </p>
             </form>
           </Paper>
         </main>
+        <FooterComponent />
       </div>
     );
   }

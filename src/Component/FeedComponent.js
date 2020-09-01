@@ -4,12 +4,10 @@ import QueryDataService from "../api/QueryDataService.js";
 
 import moment from "moment";
 import HeaderComponent from "./HeaderComponent.js";
+import FooterComponent from "./FooterComponent";
 import AuthenticationService from "./AuthenticationService.js";
 
-import { Link } from "react-router-dom";
-
 import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
 import RefreshIcon from "@material-ui/icons/Refresh";
 
 class FeedComponent extends Component {
@@ -39,8 +37,8 @@ class FeedComponent extends Component {
   render() {
     const querieslist = this.state.queries.map((m) => (
       <tr key={m.id}>
-        <td>{moment(m.querytDate).format("YYYY-MM-DD")}</td>
-        <td>{m.question}</td>
+        <td>{moment(m.date).format("YYYY-MM-DD")}</td>
+        <td>{m.title}</td>
         <td>{m.id}</td>
         <td>
           <i
@@ -103,6 +101,7 @@ class FeedComponent extends Component {
             </table>
           </div>
         )}
+        <FooterComponent />
       </div>
     );
   }

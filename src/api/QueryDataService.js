@@ -12,6 +12,12 @@ class QueryDataService {
   retrieveQuery(username, id) {
     return axios.get(`http://localhost:8080/users/${username}/queries/${id}`);
   }
+  editQuery(username, id, query) {
+    return axios.put(
+      `http://localhost:8080/users/${username}/queries/${id}`,
+      query
+    );
+  }
 
   deleteQuery(username, id) {
     return axios.delete(

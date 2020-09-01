@@ -4,7 +4,6 @@ import AuthenticatedRoute from "./AuthenticatedRoute";
 import LoginRoute from "./LoginRoute";
 import LoginComponent from "./LoginComponent";
 import LogoutComponent from "./LogoutComponent";
-import FooterComponent from "./FooterComponent";
 import WelcomeComponent from "./WelcomeComponent";
 import QueriesComponent from "./QueriesComponent";
 import EditQuery from "./EditQuery";
@@ -12,6 +11,7 @@ import AddQuery from "./AddQuery";
 import AuthenticationService from "./AuthenticationService";
 import FeedComponent from "./FeedComponent";
 import SignUp from "./SignUp";
+import SingleQueryComponent from "./SingleQueryComponent";
 import { withStyles } from "@material-ui/styles";
 import styles from "../styles/CompleteAppStyles";
 
@@ -94,6 +94,12 @@ class CompleteApp extends Component {
                 path="/addquery"
                 render={(routeProps) => (
                   <AddQuery {...routeProps} logot={this.logout} user={user} />
+                )}
+              />
+              <AuthenticatedRoute
+                path="/singlequery/:id"
+                render={(routeProps) => (
+                  <SingleQueryComponent {...routeProps} logot={this.logout} />
                 )}
               />
               <AuthenticatedRoute

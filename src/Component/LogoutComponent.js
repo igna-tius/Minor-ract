@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import HeaderComponent from "./HeaderComponent";
 import AuthenticationService from "./AuthenticationService";
+import FooterComponent from "./FooterComponent";
 
 class LogoutComponent extends Component {
   render() {
@@ -13,6 +14,7 @@ class LogoutComponent extends Component {
         <HeaderComponent login={true} logout={false} register={true} />
         <h1>You are logged out</h1>
         <div className="container">Thank You for Using Our Application.</div>
+        <FooterComponent />
       </div>
     );
   }

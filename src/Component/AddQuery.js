@@ -1,29 +1,24 @@
 import React, { Component } from "react";
 import HeaderComponent from "./HeaderComponent";
 
+import QueryDataService from "../api/QueryDataService";
+
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import FormControl from "@material-ui/core/FormControl";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import styles from "../styles/AddQueryStyles";
 
-import { Link } from "react-router-dom";
 import AuthenticationService from "./AuthenticationService";
 import AddIcon from "@material-ui/icons/Add";
 import FooterComponent from "./FooterComponent";
 
-import TextField from "@material-ui/core/TextField";
-import { FormGroup } from "@material-ui/core";
-
 import Chip from "@material-ui/core/Chip";
 
 import { v4 as uuidv4 } from "uuid";
-import moment from "moment";
+
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
 class AddQuery extends Component {
   constructor(props) {
@@ -38,16 +33,21 @@ class AddQuery extends Component {
       date: new Date(),
       allTag: "",
     };
-    this.hanldeChange = this.hanldeChange.bind(this);
-    this.registerClicked = this.registerClicked.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.addQuery = this.addQuery.bind(this);
     this.addLabel = this.addLabel.bind(this);
     this.deleteTag = this.deleteTag.bind(this);
   }
-  makeTag() {
-    const tag = this.setState({
-      allTag: tag,
-    });
+
+  componentDidMount() {
+    ValidatorForm.addValidationRule("isEnough", (value) =>
+      value.length > 20 ? true : false
+    );
+    ValidatorForm.addValidationRule("isTag", (value) =>
+      this.state.categoryList.length > 0 ? true : false
+    );
   }
+
   deleteTag(label) {
     var tg = this.state.categoryList.filter((cat) => cat !== label);
     this.setState({
@@ -57,44 +57,31 @@ class AddQuery extends Component {
   addLabel(e) {
     e.preventDefault();
     var category = this.state.category;
-    this.setState(
-      {
-        categoryList: [...this.state.categoryList, category],
-        category: "",
-      },
-      this.handleCheck
-    );
-  }
-
-  registerClicked(e) {
-    e.preventDefault();
-    const dt = new Date();
+    if (!this.state.categoryList.includes(category))
+      this.setState(
+        {
+          categoryList: [...this.state.categoryList, category],
+          category: "",
+        },
+        this.handleCheck
+      );
     this.setState({
-      date: dt,
-    });
-    const { title, categoryList, username, date, description } = this.state;
-    const msg =
-      "Username: " +
-      username +
-      "\nTitle: " +
-      title +
-      "\nDescription: " +
-      description +
-      "\nCategories: " +
-      categoryList +
-      "\nDate: " +
-      date;
-    alert(msg);
-    this.setState({
-      id: "",
-      categoryList: [],
-      title: "",
-      description: "",
-      date: new Date(),
       category: "",
     });
   }
-  hanldeChange(e) {
+
+  addQuery(e) {
+    this.setState({
+      date: new Date(),
+    });
+    const { username, title, description, categoryList, date } = this.state;
+    const id = 0;
+    const query = { id, username, title, description, categoryList, date };
+    QueryDataService.editQuery(username, id, query).then((response) => {
+      console.log(response.data);
+    });
+  }
+  handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value,
     });
@@ -115,71 +102,86 @@ class AddQuery extends Component {
               <AddIcon />
             </Avatar>
             <Typography variant="h5">Add Query</Typography>
-            <form className={classes.form} style={{ marginTop: "5px" }}>
-              <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="title">Title</InputLabel>
-                <Input
-                  id="title"
-                  name="title"
-                  autoFocus
-                  value={this.state.title}
-                  onChange={this.hanldeChange}
-                />
-              </FormControl>
+            <ValidatorForm
+              className={classes.form}
+              style={{ marginTop: "5px" }}
+              instantValidate={false}
+              onSubmit={this.addQuery}
+            >
+              <TextValidator
+                fullWidth
+                autoFocus
+                placeholder="Title"
+                name="title"
+                margin="normal"
+                value={this.state.title}
+                onChange={this.handleChange}
+                validators={["required", "isEnough"]}
+                errorMessages={[
+                  "Enter a Title",
+                  "Title must have 15 characters.",
+                ]}
+              />
 
-              <FormControl margin="normal" required fullWidth>
-                <TextField
-                  id="standard-multiline-flexible"
-                  label="Description"
-                  name="description"
-                  multiline
-                  rows={4}
-                  variant="filled"
-                  value={this.state.description}
-                  onChange={this.hanldeChange}
-                />
-              </FormControl>
+              <TextValidator
+                fullWidth
+                autoFocus
+                placeholder="Description"
+                id="standard-multiline-flexible"
+                name="description"
+                multiline
+                rows={4}
+                variant="filled"
+                value={this.state.description}
+                onChange={this.handleChange}
+                validators={["required", "isEnough"]}
+                errorMessages={[
+                  "Enter a Title",
+                  "Description must have 15 characters.",
+                ]}
+              />
               <div
                 style={{
                   display: "flex",
                   padding: 0,
                   margin: 0,
+                  marginTop: "30px",
+                  height: "100px",
                 }}
               >
-                <form
-                  className={classes.form}
-                  onSubmit={this.addLabel}
+                <TextValidator
+                  margin="normal"
+                  id="category"
                   style={{
-                    marginLeft: 0,
-                    flexDirection: "left",
-                    width: "30%",
-                    padding: 0,
+                    width: "100%",
+                    left: 0,
+                    margin: "-20px",
+                    marginTop: "40%",
                   }}
+                  fullWidth
+                  autoFocus
+                  placeholder="Category"
+                  name="category"
+                  value={this.state.category}
+                  onChange={this.handleChange}
+                  validators={["isTag"]}
+                  errorMessages={["Enter atleast one Category."]}
+                />
+                <Avatar
+                  className={classes.avatar}
+                  style={{ marginTop: "40px", backgroundColor: "#5eaaa8" }}
                 >
-                  <FormControl
-                    margin="normal"
-                    required
-                    width="40%"
-                    style={{ marginLeft: "-90px" }}
-                  >
-                    <InputLabel htmlFor="category">Category</InputLabel>
-                    <Input
-                      id="category"
-                      name="category"
-                      autoFocus
-                      value={this.state.category}
-                      onChange={this.hanldeChange}
-                    />
-                  </FormControl>
-                </form>
+                  <AddIcon onClick={this.addLabel} />
+                </Avatar>
                 <div
                   style={{
-                    width: "70%",
+                    width: "80%",
                     display: "flex",
                     flexDirection: "left",
                     flexWrap: "wrap",
                     border: "1px solid grey",
                     borderRadius: "5px",
+                    marginLeft: "10px",
                   }}
                 >
                   {this.state.categoryList.map((cat) => (
@@ -197,17 +199,21 @@ class AddQuery extends Component {
                   ))}
                 </div>
               </div>
+
               <Button
+                style={{
+                  position: "relative",
+                  marginBottom: "-110px",
+                }}
                 variant="contained"
                 type="submit"
                 fullWidth
-                color="primary"
+                color="secondary"
                 className={classes.submit}
-                onClick={this.registerClicked}
               >
-                Add
+                Save
               </Button>
-            </form>
+            </ValidatorForm>
           </Paper>
         </main>
         <FooterComponent />

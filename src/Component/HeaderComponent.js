@@ -6,7 +6,10 @@ class HeaderComponent extends Component {
     const { logout, login, register } = this.props;
     return (
       <header>
-        <nav className="navbar navbar-expand-md navbar-dark bg-primary">
+        <nav
+          className="navbar navbar-expand-md navbar-dark "
+          style={{ backgroundColor: "#5eaaa8" }}
+        >
           <div>
             <a href="www.google.com" className="navbar-brand">
               Queries ELucidator

@@ -16,6 +16,7 @@ import styles from "../styles/LoginComponetStyles";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import HeaderComponent from "./HeaderComponent";
+import FooterComponent from "./FooterComponent";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -132,7 +133,7 @@ class LoginComponent extends Component {
                 variant="contained"
                 type="submit"
                 fullWidth
-                color="primary"
+                color="secondary"
                 className={classes.submit}
                 onClick={this.loginClicked}
               >
@@ -141,6 +142,7 @@ class LoginComponent extends Component {
             </form>
           </Paper>
         </main>
+        <FooterComponent />
       </div>
     );
   }

@@ -4,6 +4,7 @@ import AuthenticationService from "./AuthenticationService.js";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import HeaderComponent from "./HeaderComponent";
+import FooterComponent from "./FooterComponent";
 
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
@@ -18,10 +19,16 @@ class QueriesComponent extends Component {
     this.deleteQueryClicked = this.deleteQueryClicked.bind(this);
     this.updateQueryClicked = this.updateQueryClicked.bind(this);
     this.refreshQuery = this.refreshQuery.bind(this);
+    this.selectQuery = this.selectQuery.bind(this);
   }
 
   componentDidMount() {
     this.refreshQuery();
+  }
+
+  selectQuery(e) {
+    this.props.history.push(`/singlequery/${e.target.id}`);
+    console.log(e.target.id);
   }
 
   deleteQueryClicked(id) {
@@ -42,14 +49,17 @@ class QueriesComponent extends Component {
       this.setState({
         queries: response.data,
       });
+      console.log(response.data);
     });
   }
 
   render() {
     const querieslist = this.state.queries.map((m) => (
-      <tr key={m.id}>
+      <tr key={m.id} id={m.id}>
         <td>{moment(m.querytDate).format("YYYY-MM-DD")}</td>
-        <td>{m.question}</td>
+        <td onClick={this.selectQuery} id={m.id}>
+          {m.title}
+        </td>
         <td>{m.id}</td>
         <td>
           <i
@@ -107,6 +117,7 @@ class QueriesComponent extends Component {
             <tbody>{querieslist}</tbody>
           </table>
         </div>
+        <FooterComponent />
       </div>
     );
   }

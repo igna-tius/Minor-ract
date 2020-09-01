@@ -2,7 +2,8 @@ import bg from "./Large-Triangles.svg";
 
 export default {
   root: {
-    backgroundColor: "#1174aa",
+    backgroundColor: "#a3d2ca",
+
     backgroundImage: `url(${bg})`,
     /* background by SVGBackgrounds.com */
     height: "100vh ",
