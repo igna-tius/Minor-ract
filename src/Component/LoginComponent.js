@@ -18,6 +18,8 @@ import MuiAlert from "@material-ui/lab/Alert";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
 
+import { Link } from "react-router-dom";
+
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -108,7 +110,7 @@ class LoginComponent extends Component {
               <LockOutlinedIcon />
             </Avatar>
             <Typography variant="h5">Sign In</Typography>
-            <form className={classes.form}>
+            <form className={classes.form} onSubmit={this.loginClicked}>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="email">Username</InputLabel>
                 <Input
@@ -135,10 +137,18 @@ class LoginComponent extends Component {
                 fullWidth
                 color="secondary"
                 className={classes.submit}
-                onClick={this.loginClicked}
               >
                 Sign In
               </Button>
+              <p
+                className="forgot-password text-right"
+                style={{ marginBottom: "-10px" }}
+              >
+                Not a User{" "}
+                <Link to="/register" style={{ textDecoration: "none" }}>
+                  sign up?
+                </Link>
+              </p>
             </form>
           </Paper>
         </main>
@@ -148,3 +158,8 @@ class LoginComponent extends Component {
   }
 }
 export default withStyles(styles)(LoginComponent);
+
+/*  
+Developed BY:Shubham Dalal
+email:dshubh2015@gmail.com
+*/

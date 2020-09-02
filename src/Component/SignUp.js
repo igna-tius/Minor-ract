@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import AuthenticationService from "./AuthenticationService";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
+import LoginDataService from "../api/LoginDataService";
 
 class SignUp extends Component {
   constructor(props) {
@@ -32,15 +33,18 @@ class SignUp extends Component {
 
   registerClicked(e) {
     e.preventDefault();
-    const msg =
-      this.state.firstname +
-      " " +
-      this.state.lastname +
-      " " +
-      this.state.username +
-      " " +
-      this.state.password;
-    alert(msg);
+    const { firstname, lastname, username, password, email } = this.state;
+    const userdetails = {
+      firstname,
+      lastname,
+      username,
+      password,
+      email,
+    };
+    console.log(userdetails);
+    LoginDataService.registerUser(userdetails).then((response) =>
+      console.log(Response.data)
+    );
   }
 
   hanldeChange(e) {
@@ -63,7 +67,7 @@ class SignUp extends Component {
               <Usericon />
             </Avatar>
             <Typography variant="h5">Sign Up</Typography>
-            <form className={classes.form}>
+            <form className={classes.form} onSubmit={this.registerClicked}>
               <div
                 style={{
                   display: "flex",
@@ -134,7 +138,6 @@ class SignUp extends Component {
                 fullWidth
                 color="secondary"
                 className={classes.submit}
-                onClick={this.registerClicked}
               >
                 Sign up
               </Button>

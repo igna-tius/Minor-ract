@@ -27,5 +27,16 @@ class QueryDataService {
       `http://localhost:8080/users/${username}/queries/${id}`
     );
   }
+
+  retriveSolutions(id) {
+    return axios.get(`http://localhost:8080//solutions/byqid/${id}`);
+  }
+
+  postSolution(solution, username, qid) {
+    return axios.post(
+      `http://localhost:8080/solutions/${username}/${qid}`,
+      solution
+    );
+  }
 }
 export default new QueryDataService();

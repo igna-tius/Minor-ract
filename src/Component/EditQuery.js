@@ -148,7 +148,7 @@ class EditQuery extends Component {
                   onChange={this.handleChange}
                   validators={["required", "isEnough"]}
                   errorMessages={[
-                    "Enter a Title",
+                    "Enter a Description",
                     "Description must have 15 characters.",
                   ]}
                 />
