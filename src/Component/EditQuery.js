@@ -93,6 +93,7 @@ class EditQuery extends Component {
     QueryDataService.editQuery(username, id, query).then((response) => {
       console.log(response.data);
     });
+    this.props.history.push("/");
   }
 
   render() {

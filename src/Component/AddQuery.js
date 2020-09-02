@@ -77,9 +77,10 @@ class AddQuery extends Component {
     const { username, title, description, categoryList, date } = this.state;
     const id = 0;
     const query = { id, username, title, description, categoryList, date };
-    QueryDataService.editQuery(username, id, query).then((response) => {
+    QueryDataService.addQuery(username, query).then((response) => {
       console.log(response.data);
     });
+    this.props.history.push("/");
   }
   handleChange(e) {
     this.setState({

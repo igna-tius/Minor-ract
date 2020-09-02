@@ -18,6 +18,9 @@ class QueryDataService {
       query
     );
   }
+  addQuery(username, query) {
+    return axios.post(`http://localhost:8080/users/${username}/queries`, query);
+  }
 
   deleteQuery(username, id) {
     return axios.delete(

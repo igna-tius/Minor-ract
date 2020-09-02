@@ -14,6 +14,7 @@ class SingleQueryComponent extends Component {
         />
         <div height="200px" style={{ backgroundColor: "red" }}>
           {this.props.match.params.id}
+          hiii
         </div>
         <FooterComponent />
       </div>
