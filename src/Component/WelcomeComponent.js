@@ -6,6 +6,8 @@ import HeaderComponent from "./HeaderComponent";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 
+import divStyle from "./WelcomeStyle";
+
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -48,12 +50,19 @@ class WelcomeComponent extends Component {
           </Alert>
         </Snackbar>
 
-        <h1>Welcome!</h1>
+        {/* <h1>Welcome!</h1>
         <div className="container">
           Welcome {user} .
           <br />
           You can see your Posted queries <Link to="/queries">here</Link>.
-        </div>
+        </div> */}
+        
+        <div style = {divStyle} class="jumbotron ">
+          <h1 class="display-4">Welcome {user}!</h1>
+          <p class="lead">Step up and shoot. Either you are full of doubts or solutions. Whatever it is, you are not alone. Build your community here, contribute in your preferred areas and grow.</p>
+          
+          <p>You can see your Posted Queries <Link to="/queries">here</Link>.</p>
+            </div>
       </div>
     );
   }
