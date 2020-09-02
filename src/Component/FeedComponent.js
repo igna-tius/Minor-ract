@@ -18,11 +18,18 @@ class FeedComponent extends Component {
       data: false,
     };
     this.refreshQuery = this.refreshQuery.bind(this);
+    this.selectQuery = this.selectQuery.bind(this);
   }
 
   componentDidMount() {
     this.refreshQuery();
   }
+
+  selectQuery(e) {
+    this.props.history.push(`answerquery/${e.target.user}/${e.target.id}`);
+    console.log(e.target.id, e.target.user);
+  }
+
   refreshQuery() {
     QueryDataService.retriveAll()
       .then((response) => {
@@ -38,22 +45,15 @@ class FeedComponent extends Component {
     const querieslist = this.state.queries.map((m) => (
       <tr key={m.id}>
         <td>{moment(m.date).format("YYYY-MM-DD")}</td>
-        <td>{m.title}</td>
+        <td
+          onClick={() =>
+            this.props.history.push(`answerquery/${m.username}/${m.id}`)
+          }
+          id={m.id}
+        >
+          {m.title}
+        </td>
         <td>{m.id}</td>
-        <td>
-          <i
-            className="fas fa-trash-alt"
-            onClick={() => this.deleteQueryClicked(m.id)}
-          >
-            delete
-          </i>
-        </td>
-        <td>
-          <i
-            className="fas fa-edit"
-            onClick={() => this.updateQueryClicked(m.id)}
-          ></i>
-        </td>
       </tr>
     ));
     const check = AuthenticationService.isUserLoggedIn();

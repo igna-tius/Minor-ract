@@ -8,6 +8,7 @@ import FooterComponent from "./FooterComponent";
 
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+import RefreshIcon from "@material-ui/icons/Refresh";
 
 class QueriesComponent extends Component {
   constructor(props) {
@@ -90,13 +91,20 @@ class QueriesComponent extends Component {
         <br />
         <div>
           <h2>Queries</h2>
-        </div>
-        <div style={{ marginLeft: "75%" }}>
-          <Link to="/addquery">
-            <Fab style={{ backgroundColor: "#167bff" }} aria-label="add">
-              <AddIcon />
+
+          <div style={{ marginLeft: "75%" }}>
+            <Link to="/addquery">
+              <Fab
+                style={{ backgroundColor: "#5eaaa8", marginRight: "10px" }}
+                aria-label="add"
+              >
+                <AddIcon />
+              </Fab>
+            </Link>
+            <Fab style={{ backgroundColor: "#5eaaa8" }} aria-label="add">
+              <RefreshIcon onClick={this.refreshQuery} />
             </Fab>
-          </Link>
+          </div>
         </div>
         <br />
         {this.state.message && (

@@ -18,10 +18,24 @@ class QueryDataService {
       query
     );
   }
+  addQuery(username, query) {
+    return axios.post(`http://localhost:8080/users/${username}/queries`, query);
+  }
 
   deleteQuery(username, id) {
     return axios.delete(
       `http://localhost:8080/users/${username}/queries/${id}`
+    );
+  }
+
+  retriveSolutions(id) {
+    return axios.get(`http://localhost:8080//solutions/byqid/${id}`);
+  }
+
+  postSolution(solution, username, qid) {
+    return axios.post(
+      `http://localhost:8080/solutions/${username}/${qid}`,
+      solution
     );
   }
 }

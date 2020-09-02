@@ -14,6 +14,14 @@ import SignUp from "./SignUp";
 import SingleQueryComponent from "./SingleQueryComponent";
 import { withStyles } from "@material-ui/styles";
 import styles from "../styles/CompleteAppStyles";
+import AnswerComponent from "./AnswerComponent";
+import PostAnswerComponent from "./PostAnswerComponent";
+
+/*  
+Developed BY:Shubham Dalal
+email:dshubh2015@gmail.com
+this manages routes.
+*/
 
 class CompleteApp extends Component {
   constructor(props) {
@@ -112,6 +120,25 @@ class CompleteApp extends Component {
                 path="/queries"
                 render={(routeProps) => (
                   <QueriesComponent {...routeProps} logot={this.logout} />
+                )}
+              />
+              <AuthenticatedRoute
+                exact
+                path="/postanswer/:id/"
+                render={(routeProps) => (
+                  <LoginComponent {...routeProps} logot={this.logout} />
+                )}
+              />
+              <AuthenticatedRoute
+                path="/postanswer/:id/:username"
+                render={(routeProps) => (
+                  <PostAnswerComponent {...routeProps} logot={this.logout} />
+                )}
+              />
+              <Route
+                path="/answerquery/:username/:id"
+                render={(routeProps) => (
+                  <AnswerComponent {...routeProps} logot={this.logout} />
                 )}
               />
               <Route

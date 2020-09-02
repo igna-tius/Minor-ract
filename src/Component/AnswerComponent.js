@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import HeaderComponent from "./HeaderComponent";
-import FooterComponent from "./FooterComponent";
 import AuthenticationService from "./AuthenticationService";
 import QueryDataService from "../api/QueryDataService";
+import HeaderComponent from "./HeaderComponent";
+import FooterComponent from "./FooterComponent";
 
 import Paper from "@material-ui/core/Paper";
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -12,27 +12,32 @@ import EditIcon from "@material-ui/icons/Edit";
 import { Card } from "react-bootstrap";
 import Chip from "@material-ui/core/Chip";
 
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+
 import SolutionComponent from "./SolutionComponent";
 
-class SingleQueryComponent extends Component {
+class AnswerComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       id: this.props.match.params.id,
+      postedBy: this.props.match.params.username,
       username: AuthenticationService.getLoggedInUsername(),
       query: {},
       solutions: [],
       categories: [],
     };
+    this.addAnswer = this.addAnswer.bind(this);
   }
 
   componentDidMount() {
-    QueryDataService.retrieveQuery(this.state.username, this.state.id).then(
-      (response) =>
-        this.setState({
-          query: response.data,
-          categories: response.data.categoryList,
-        })
+    const username = this.state.postedBy;
+    QueryDataService.retrieveQuery(username, this.state.id).then((response) =>
+      this.setState({
+        query: response.data,
+        categories: response.data.categoryList,
+      })
     );
     QueryDataService.retriveSolutions(this.state.id).then((response) =>
       this.setState({
@@ -42,25 +47,52 @@ class SingleQueryComponent extends Component {
     );
   }
 
+  addAnswer() {
+    this.props.history.push(
+      `/postanswer/${this.state.id}/${this.state.username}`
+    );
+  }
+
   render() {
     const { query, categories, solutions } = this.state;
     const { classes } = this.props;
-
+    const check = AuthenticationService.isUserLoggedIn();
+    let sas = this.state.solutions.sort(function (a, b) {
+      var dateA = new Date(a.date),
+        dateB = new Date(b.date);
+      console.log(dateA, dateB);
+      return dateB - dateB;
+    });
+    console.log(sas);
     const sol =
       this.state.len > 0 ? (
-        solutions.map((c) => <SolutionComponent solution={c} />)
+        sas.map((c) => <SolutionComponent solution={c} key={c.title} />)
       ) : (
-        <h4 style={{ border: "30px" }}>No Solution Posted Yet.</h4>
+        <h4 style={{ border: "30px" }}>No Solution Posted Yet.Post Solution</h4>
       );
     return (
       <div>
         <HeaderComponent
-          login={false}
-          register={false}
-          logout={true}
-          logot={this.props.logout}
+          login={!check}
+          register={!check}
+          logout={check}
+          logot={this.props.logot}
         />
         <div className={classes.main}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "10px",
+            }}
+            onClick={this.addAnswer}
+          >
+            <Chip
+              icon={<AddIcon variant="outlined" />}
+              label="Post Answer"
+              style={{ backgroundColor: "#5eaaa8" }}
+            />
+          </div>
           <div className={classes.query}>
             <Paper
               className={classes.paper}
@@ -112,6 +144,7 @@ class SingleQueryComponent extends Component {
                   </div>
                 </Card.Body>
               </Card>
+
               {sol}
             </Paper>
           </div>
@@ -122,4 +155,4 @@ class SingleQueryComponent extends Component {
   }
 }
 
-export default withStyles(styles)(SingleQueryComponent);
+export default withStyles(styles)(AnswerComponent);

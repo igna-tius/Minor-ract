@@ -93,6 +93,7 @@ class EditQuery extends Component {
     QueryDataService.editQuery(username, id, query).then((response) => {
       console.log(response.data);
     });
+    this.props.history.push("/");
   }
 
   render() {
@@ -147,7 +148,7 @@ class EditQuery extends Component {
                   onChange={this.handleChange}
                   validators={["required", "isEnough"]}
                   errorMessages={[
-                    "Enter a Title",
+                    "Enter a Description",
                     "Description must have 15 characters.",
                   ]}
                 />
