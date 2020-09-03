@@ -50,12 +50,6 @@ class WelcomeComponent extends Component {
           </Alert>
         </Snackbar>
 
-        {/* <h1>Welcome!</h1>
-        <div className="container">
-          Welcome {user} .
-          <br />
-          You can see your Posted queries <Link to="/queries">here</Link>.
-        </div> */}
         
         <div style = {divStyle} class="jumbotron ">
           <h1 class="display-4">Welcome {user} !<i style={{color: "#5eaaa8" }} className ="fas fa-award"></i></h1>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Card } from "react-bootstrap";
+import Fab from "@material-ui/core/Fab";
 
 
 
@@ -26,7 +27,7 @@ function QueryCard(props) {
             
                   <Card.Text><span style={{ float: "right" }}>
                       
-                      {props.username}
+                  <i class="fas fa-edit"></i> {props.username}
                     </span>{props.date}</Card.Text>
             </Card.Body>
         </Card>
