@@ -18,6 +18,7 @@ const styles = (theme) => ({
     padding: 0,
   },
   paper: {
+    backgroundColor: "#e9ecef",
     marginTop: theme.spacing.unit * 8,
     width: "auto",
     height: "auto",

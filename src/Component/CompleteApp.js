@@ -28,7 +28,7 @@ class CompleteApp extends Component {
     super(props);
     this.state = {
       login: false,
-      user: "",
+      user: AuthenticationService.getLoggedInUsername(),
     };
     this.hasLoggedIn = this.hasLoggedIn.bind(this);
     this.logout = this.logout.bind(this);
@@ -89,7 +89,7 @@ class CompleteApp extends Component {
                 )}
               />
               <AuthenticatedRoute
-                path="/welcome/"
+                path={`/welcome`}
                 render={(routeProps) => (
                   <WelcomeComponent
                     {...routeProps}

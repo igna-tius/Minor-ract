@@ -34,6 +34,7 @@ class LoginComponent extends Component {
       loginsuccess: false,
       vertical: "top",
       horizontal: "center",
+      firstname: "",
     };
     this.hanldeChange = this.hanldeChange.bind(this);
     this.loginClicked = this.loginClicked.bind(this);
@@ -53,7 +54,7 @@ class LoginComponent extends Component {
     e.preventDefault();
     LoginDataService.checkLogin(this.state.username, this.state.password)
       .then((response) => {
-        console.log(response);
+        this.setState({ firstname: response.data.firstname });
         AuthenticationService.registerSuccessfulLogin(
           this.state.username,
           this.state.password
@@ -64,7 +65,7 @@ class LoginComponent extends Component {
         });
 
         this.props.fun(this.state.username);
-        this.props.history.push(`welcome/${response.data.firstname}`);
+        this.props.history.push(`/welcome`);
       })
       .catch(
         setTimeout(() => {

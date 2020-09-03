@@ -12,6 +12,7 @@ const styles = (theme) => ({
     },
   },
   paper: {
+    backgroundColor: "#e9ecef",
     marginTop: theme.spacing.unit * 8,
     height: 520,
     display: "flex",

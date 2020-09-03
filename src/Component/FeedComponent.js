@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 import QueryDataService from "../api/QueryDataService.js";
 
-import moment from "moment";
 import HeaderComponent from "./HeaderComponent.js";
 import FooterComponent from "./FooterComponent";
 import AuthenticationService from "./AuthenticationService.js";
@@ -10,6 +9,7 @@ import AuthenticationService from "./AuthenticationService.js";
 import Fab from "@material-ui/core/Fab";
 import RefreshIcon from "@material-ui/icons/Refresh";
 
+import QueryCard from "./QueryCard";
 class FeedComponent extends Component {
   constructor(props) {
     super(props);
@@ -43,18 +43,7 @@ class FeedComponent extends Component {
 
   render() {
     const querieslist = this.state.queries.map((m) => (
-      <tr key={m.id}>
-        <td>{moment(m.date).format("YYYY-MM-DD")}</td>
-        <td
-          onClick={() =>
-            this.props.history.push(`answerquery/${m.username}/${m.id}`)
-          }
-          id={m.id}
-        >
-          {m.title}
-        </td>
-        <td>{m.id}</td>
-      </tr>
+      <QueryCard query={m} editable={false} />
     ));
     const check = AuthenticationService.isUserLoggedIn();
     return (
@@ -78,29 +67,36 @@ class FeedComponent extends Component {
               login={!check}
               logot={this.props.logot}
             />
-            <div>
-              <h2>Queries</h2>
+            <div
+              style={{
+                margin: 100,
+                marginTop: "30px",
+                color: "dark cyan",
+                backgroundColour: "#5eaaa8",
+                width: "85%",
+                lineHeight: "3",
+                padding: "10",
+                height: "50",
 
-              <div style={{ marginLeft: "75%" }}>
-                <Fab style={{ backgroundColor: "#167bff" }} aria-label="add">
-                  <RefreshIcon onClick={this.refreshQuery} />
-                </Fab>
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+              class="jumbotron "
+            >
+              <div>
+                <h2>Queries</h2>
+
+                <div style={{ float: "Right", marginBottom: "10px" }}>
+                  <Fab style={{ backgroundColor: "#5eaaa8" }} aria-label="add">
+                    <RefreshIcon onClick={this.refreshQuery} />
+                  </Fab>
+                </div>
               </div>
+              <div style={{ marginTop: "30px" }}>{querieslist}</div>
             </div>
-            <table className="table" style={{ marginTop: "30px" }}>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Query</th>
-                  <th>Query id</th>
-                  <th></th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>{querieslist}</tbody>
-            </table>
           </div>
         )}
+
         <FooterComponent />
       </div>
     );

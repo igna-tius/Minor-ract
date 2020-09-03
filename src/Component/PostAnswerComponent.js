@@ -13,8 +13,6 @@ import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 import withStyles from "@material-ui/core/styles/withStyles";
 import styles from "../styles/AddQueryStyles";
 
-import AuthenticationService from "./AuthenticationService";
-
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
 class PostComponent extends Component {
@@ -63,7 +61,7 @@ class PostComponent extends Component {
     });
   }
   render() {
-    const { qid, sid, username, title, description } = this.state;
+    const { title, description } = this.state;
     const { classes } = this.props;
     return (
       <div>
@@ -95,7 +93,7 @@ class PostComponent extends Component {
                 placeholder="Title"
                 name="title"
                 margin="normal"
-                value={this.state.title}
+                value={title}
                 onChange={this.handleChange}
                 validators={["required", "isEnough"]}
                 errorMessages={[
@@ -113,7 +111,7 @@ class PostComponent extends Component {
                 multiline
                 rows={10}
                 variant="filled"
-                value={this.state.description}
+                value={description}
                 onChange={this.handleChange}
                 validators={["required", "isEnough"]}
                 errorMessages={[

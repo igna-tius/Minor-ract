@@ -11,6 +11,7 @@ const styles = (theme) => ({
     },
   },
   paper: {
+    backgroundColor: "#e9ecef",
     marginTop: theme.spacing.unit * 8,
     display: "flex",
     flexDirection: "column",

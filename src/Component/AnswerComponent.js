@@ -12,7 +12,6 @@ import EditIcon from "@material-ui/icons/Edit";
 import { Card } from "react-bootstrap";
 import Chip from "@material-ui/core/Chip";
 
-import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 
 import SolutionComponent from "./SolutionComponent";
@@ -54,7 +53,7 @@ class AnswerComponent extends Component {
   }
 
   render() {
-    const { query, categories, solutions } = this.state;
+    const { query, categories } = this.state;
     const { classes } = this.props;
     const check = AuthenticationService.isUserLoggedIn();
     let sas = this.state.solutions.sort(function (a, b) {
