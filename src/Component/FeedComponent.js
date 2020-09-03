@@ -10,6 +10,9 @@ import AuthenticationService from "./AuthenticationService.js";
 import Fab from "@material-ui/core/Fab";
 import RefreshIcon from "@material-ui/icons/Refresh";
 
+
+import FeedCard from "../Component/FeedCard";
+
 class FeedComponent extends Component {
   constructor(props) {
     super(props);
@@ -43,18 +46,22 @@ class FeedComponent extends Component {
 
   render() {
     const querieslist = this.state.queries.map((m) => (
-      <tr key={m.id}>
-        <td>{moment(m.date).format("YYYY-MM-DD")}</td>
-        <td
-          onClick={() =>
-            this.props.history.push(`answerquery/${m.username}/${m.id}`)
-          }
-          id={m.id}
-        >
-          {m.title}
-        </td>
-        <td>{m.id}</td>
-      </tr>
+      <FeedCard title = {m.title}
+      id = {m.id}
+      date = {moment(m.querytDate).format("DD-MM-YYYY")}
+      />
+      // <tr key={m.id}>
+      //   <td>{moment(m.date).format("YYYY-MM-DD")}</td>
+      //   <td
+      //     onClick={() =>
+      //       this.props.history.push(`answerquery/${m.username}/${m.id}`)
+      //     }
+      //     id={m.id}
+      //   >
+      //     {m.title}
+      //   </td>
+      //   <td>{m.id}</td>
+      // </tr>
     ));
     const check = AuthenticationService.isUserLoggedIn();
     return (
