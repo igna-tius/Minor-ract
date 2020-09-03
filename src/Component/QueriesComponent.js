@@ -10,6 +10,8 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import RefreshIcon from "@material-ui/icons/Refresh";
 
+import QueryCard from "../Component/QueryCard";
+
 class QueriesComponent extends Component {
   constructor(props) {
     super(props);
@@ -56,27 +58,32 @@ class QueriesComponent extends Component {
 
   render() {
     const querieslist = this.state.queries.map((m) => (
-      <tr key={m.id} id={m.id}>
-        <td>{moment(m.querytDate).format("YYYY-MM-DD")}</td>
-        <td onClick={this.selectQuery} id={m.id}>
-          {m.title}
-        </td>
-        <td>{m.id}</td>
-        <td>
-          <i
-            className="fas fa-trash-alt"
-            onClick={() => this.deleteQueryClicked(m.id)}
-          >
-            delete
-          </i>
-        </td>
-        <td>
-          <i
-            className="fas fa-edit"
-            onClick={() => this.updateQueryClicked(m.id)}
-          ></i>
-        </td>
-      </tr>
+      <QueryCard title = {m.title}
+                username = {m.username}
+                date = {moment(m.querytDate).format("DD-MM-YYYY")}
+                />
+
+      // <tr key={m.id} id={m.id}>
+      //   <td>{moment(m.querytDate).format("YYYY-MM-DD")}</td>
+      //   <td onClick={this.selectQuery} id={m.id}>
+      //     {m.title}
+      //   </td>
+      //   <td>{m.id}</td>
+      //   <td>
+      //     <i
+      //       className="fas fa-trash-alt"
+      //       onClick={() => this.deleteQueryClicked(m.id)}
+      //     >
+      //       delete
+      //     </i>
+      //   </td>
+      //   <td>
+      //     <i
+      //       className="fas fa-edit"
+      //       onClick={() => this.updateQueryClicked(m.id)}
+      //     ></i>
+      //   </td>
+      // </tr>
     ));
 
     const check = AuthenticationService.isUserLoggedIn();

@@ -58,7 +58,7 @@ class WelcomeComponent extends Component {
         </div> */}
         
         <div style = {divStyle} class="jumbotron ">
-          <h1 class="display-4">Welcome {user}!</h1>
+          <h1 class="display-4">Welcome {user} !<i style={{color: "#5eaaa8" }} className ="fas fa-award"></i></h1>
           <p class="lead">Step up and shoot. Either you are full of doubts or solutions. Whatever it is, you are not alone. Build your community here, contribute in your preferred areas and grow.</p>
           
           <p>You can see your Posted Queries <Link to="/queries">here</Link>.</p>

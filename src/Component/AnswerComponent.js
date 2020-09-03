@@ -12,7 +12,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import { Card } from "react-bootstrap";
 import Chip from "@material-ui/core/Chip";
 
-import Fab from "@material-ui/core/Fab";
+
 import AddIcon from "@material-ui/icons/Add";
 
 import SolutionComponent from "./SolutionComponent";
