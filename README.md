@@ -1,5 +1,22 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+It uses Libraries such as Material-ui,React-Bootstrap,moment.
+
+It uses Resfull-api service made in Java as Backend.
+
+![GitHub Logo](https://github.com/igna-tius/Minor-react/blob/master/Project%20Snapshots/login.png?raw=true)
+![GitHub Logo](https://github.com/igna-tius/Minor-react/blob/master/Project%20Snapshots/signup.png?raw=true)
+![GitHub Logo](https://github.com/igna-tius/Minor-react/blob/master/Project%20Snapshots/Welcome.png?raw=true)
+![GitHub Logo](https://github.com/igna-tius/Minor-react/blob/master/Project%20Snapshots/addquery.png?raw=true)
+![GitHub Logo](https://github.com/igna-tius/Minor-react/blob/master/Project%20Snapshots/editquery.png?raw=true)
+![GitHub Logo](https://github.com/igna-tius/Minor-react/blob/master/Project%20Snapshots/feed.png?raw=true)
+![GitHub Logo](https://github.com/igna-tius/Minor-react/blob/master/Project%20Snapshots/postanswer.png?raw=true)
+![GitHub Logo](https://github.com/igna-tius/Minor-react/blob/master/Project%20Snapshots/showquerydetail.png?raw=true)
+
+The website is made Responsive.
+
+![GitHub Logo](https://github.com/igna-tius/Minor-react/blob/master/Project%20Snapshots/Responsive.png?raw=true)
+
 ## Available Scripts
 
 In the project directory, you can run:
