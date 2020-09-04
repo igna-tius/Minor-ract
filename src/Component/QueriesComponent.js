@@ -8,9 +8,16 @@ import FooterComponent from "./FooterComponent";
 
 import QueryCard from "../Component/QueryCard";
 
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import RefreshIcon from "@material-ui/icons/Refresh";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 class QueriesComponent extends Component {
   constructor(props) {
@@ -18,26 +25,37 @@ class QueriesComponent extends Component {
     this.state = {
       queries: [],
       message: "",
+      open: false,
+      vertical: "top",
+      horizontal: "center",
     };
     this.deleteQueryClicked = this.deleteQueryClicked.bind(this);
     this.updateQueryClicked = this.updateQueryClicked.bind(this);
     this.refreshQuery = this.refreshQuery.bind(this);
     this.selectQuery = this.selectQuery.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   componentDidMount() {
     this.refreshQuery();
   }
 
-  selectQuery(e) {
-    this.props.history.push(`/singlequery/${e.target.id}`);
-    console.log(e.target.id);
+  handleClose() {
+    this.setState({ open: false });
+  }
+
+  selectQuery(user, id) {
+    this.props.history.push(`/singlequery/${id}`);
+    console.log(id);
   }
 
   deleteQueryClicked(id) {
     let username = AuthenticationService.getLoggedInUsername();
     QueryDataService.deleteQuery(username, id).then((response) => {
-      this.setState({ message: `Delete of Query ${id} Successful` });
+      this.setState({
+        message: `Delete of Query ${id} Successful`,
+        open: true,
+      });
       this.refreshQuery();
     });
   }
@@ -63,10 +81,12 @@ class QueriesComponent extends Component {
         deleteQuery={this.deleteQueryClicked}
         editQuery={this.updateQueryClicked}
         editable={true}
+        selectQuery={this.selectQuery}
       />
     ));
 
     const check = AuthenticationService.isUserLoggedIn();
+    const { vertical, horizontal } = this.state;
     return (
       <div>
         <HeaderComponent
@@ -110,12 +130,21 @@ class QueriesComponent extends Component {
               </Fab>
             </div>
           </div>
-          <br />
-          {this.state.message && (
-            <div className="alert alert-success">{this.state.message}</div>
+          <Snackbar
+            anchorOrigin={{ vertical, horizontal }}
+            open={this.state.open}
+            autoHideDuration={4000}
+            onClose={this.handleClose}
+          >
+            <Alert onClose={this.handleClose} severity="success">
+              {this.state.message}
+            </Alert>
+          </Snackbar>
+          {this.state.queries.length === 0 && (
+            <h1 class="display-4" style={{ marginTop: "100px" }}>
+              No Query Posted by you.
+            </h1>
           )}
-          <br />
-          {this.state.queries.length === 0 && <h2>No Query Posted by you.</h2>}
           {!(this.state.queries.length === 0) && (
             <div className="container">{querieslist}</div>
           )}

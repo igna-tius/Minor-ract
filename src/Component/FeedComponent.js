@@ -25,9 +25,9 @@ class FeedComponent extends Component {
     this.refreshQuery();
   }
 
-  selectQuery(e) {
-    this.props.history.push(`answerquery/${e.target.user}/${e.target.id}`);
-    console.log(e.target.id, e.target.user);
+  selectQuery(user, id) {
+    this.props.history.push(`answerquery/${user}/${id}`);
+    console.log(id, user);
   }
 
   refreshQuery() {
@@ -43,59 +43,52 @@ class FeedComponent extends Component {
 
   render() {
     const querieslist = this.state.queries.map((m) => (
-      <QueryCard query={m} editable={false} />
+      <QueryCard query={m} editable={false} selectQuery={this.selectQuery} />
     ));
     const check = AuthenticationService.isUserLoggedIn();
     return (
       <div>
-        {!this.state.data && (
-          <div>
-            <HeaderComponent
-              register={!check}
-              logout={check}
-              login={!check}
-              logot={this.props.logot}
-            />
-            <h1>No data received</h1>
-          </div>
-        )}
-        {this.state.data && (
-          <div>
-            <HeaderComponent
-              register={!check}
-              logout={check}
-              login={!check}
-              logot={this.props.logot}
-            />
-            <div
-              style={{
-                margin: 100,
-                marginTop: "30px",
-                color: "dark cyan",
-                backgroundColour: "#5eaaa8",
-                width: "85%",
-                lineHeight: "3",
-                padding: "10",
-                height: "50",
+        <HeaderComponent
+          register={!check}
+          logout={check}
+          login={!check}
+          logot={this.props.logot}
+        />
 
-                marginLeft: "auto",
-                marginRight: "auto",
-              }}
-              class="jumbotron "
-            >
-              <div>
-                <h2>Queries</h2>
+        <div
+          style={{
+            margin: 100,
+            marginTop: "30px",
+            color: "dark cyan",
+            backgroundColour: "#5eaaa8",
+            width: "85%",
+            lineHeight: "3",
+            padding: "10",
+            height: "50",
 
-                <div style={{ float: "Right", marginBottom: "10px" }}>
-                  <Fab style={{ backgroundColor: "#5eaaa8" }} aria-label="add">
-                    <RefreshIcon onClick={this.refreshQuery} />
-                  </Fab>
-                </div>
-              </div>
-              <div style={{ marginTop: "30px" }}>{querieslist}</div>
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+          class="jumbotron "
+        >
+          <div>
+            <h2>Queries</h2>
+
+            <div style={{ float: "Right", marginBottom: "10px" }}>
+              <Fab style={{ backgroundColor: "#5eaaa8" }} aria-label="add">
+                <RefreshIcon onClick={this.refreshQuery} />
+              </Fab>
             </div>
           </div>
-        )}
+          {this.state.data && (
+            <div style={{ marginTop: "30px" }}>{querieslist}</div>
+          )}
+          {this.state.queries.length === 0 && (
+            <h1 class="display-4" style={{ marginTop: "100px" }}>
+              No data received.
+            </h1>
+          )}
+        </div>
 
         <FooterComponent />
       </div>

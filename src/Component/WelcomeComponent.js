@@ -6,6 +6,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 
 import AuthenticationService from "./AuthenticationService";
+import FooterComponent from "./FooterComponent";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -75,6 +76,7 @@ class WelcomeComponent extends Component {
             You can see your Posted Queries <Link to="/queries">here</Link>.
           </p>
         </div>
+        <FooterComponent />
       </div>
     );
   }

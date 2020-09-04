@@ -12,8 +12,24 @@ class LogoutComponent extends Component {
     return (
       <div>
         <HeaderComponent login={true} logout={false} register={true} />
-        <h1>You are logged out</h1>
-        <div className="container">Thank You for Using Our Application.</div>
+        <div
+          style={{
+            margin: 100,
+            marginTop: "30px",
+            color: "dark cyan",
+            backgroundColour: "#5eaaa8",
+            width: "85%",
+            lineHeight: "3",
+            padding: "10",
+            height: "50",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+          class="jumbotron "
+        >
+          <h1 class="display-4">You are logged out.</h1>
+          <div className="container">Thank You for Using Our Application.</div>
+        </div>
         <FooterComponent />
       </div>
     );
