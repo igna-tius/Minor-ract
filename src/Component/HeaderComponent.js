@@ -11,7 +11,7 @@ class HeaderComponent extends Component {
           style={{ backgroundColor: "#5eaaa8" }}
         >
           <Link to="/" className="navbar-brand">
-            Queries ELucidator
+            Tech Canvass
           </Link>
           <button
             className="navbar-toggler"
